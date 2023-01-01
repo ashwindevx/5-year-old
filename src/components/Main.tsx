@@ -10,6 +10,8 @@ const Main = () => {
   };
 
   const [answer, setAnswer] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const initialValue = {
     topic: "",
@@ -35,14 +37,28 @@ const Main = () => {
       }),
     };
 
+    setLoading(true);
+
     const data = await fetch(
       "https://api.openai.com/v1/engines/text-davinci-003/completions",
       requestOptions
     )
       .then((response) => response.json())
       .then((res) => setAnswer(res.choices[0].text));
+    setLoading(false);
+    setCopied(false);
     return data;
   };
+
+  function copyText(text: string) {
+    const textField = document.createElement("textarea");
+    textField.innerText = text;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+    setCopied(true);
+  }
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-violet-500 to-violet-800">
@@ -67,10 +83,21 @@ const Main = () => {
           </Form>
         </Formik>
       </div>
-      {answer && (
+      {loading && (
+        <h4 className="mt-10 text-2xl font-bold text-white">Loading...</h4>
+      )}
+      {answer && !loading ? (
         <div className="mt-20 h-full w-1/2 rounded-3xl border-2 border-white p-4 text-white">
           <p>{answer}</p>
+          <button
+            onClick={() => copyText(answer)}
+            className="mt-4 rounded-full bg-white px-4 py-2 text-black"
+          >
+            {copied ? "Copied!" : "Copy Text"}
+          </button>
         </div>
+      ) : (
+        <div></div>
       )}
 
       <button
