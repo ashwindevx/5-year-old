@@ -6,6 +6,7 @@ import { collection, addDoc } from "@firebase/firestore";
 import { Formik, Form, Field } from "formik";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { PromptContext } from "../context/promptContext";
+import Link from "next/link";
 
 const Main = () => {
   const handleLogout = async () => {
@@ -40,7 +41,7 @@ const Main = () => {
 
   const fetchData = async (values: { topic: string }) => {
     const prompt = `Explain ${values.topic} to a 5 year old.`;
-    updatePrompt({ topic: values.topic, user: user.uid });
+    updatePrompt({ topic: values.topic, user: user?.uid });
 
     const requestOptions = {
       method: "POST",
@@ -121,9 +122,9 @@ const Main = () => {
       ) : (
         <div></div>
       )}
-      <a href="/answers" className="mt-10 text-white underline">
+      <Link href="/answers" className="mt-10 text-white underline">
         Your saved Answers &gt;
-      </a>
+      </Link>
       <button
         className="text-md mt-16 rounded-full border-2 border-slate-300 px-4 py-2 text-slate-300"
         onClick={handleLogout}

@@ -1,41 +1,18 @@
-import { useEffect, useState } from "react";
-import { auth, db } from "../firebase";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
+type Answer = {
+  topic: string;
+  answerText: string;
+  key: string;
+};
 
-const Answer = () => {
-  const [user] = useAuthState(auth);
-  const [answers, setAnswers] = useState([]);
-  console.log("🚀 ~ file: Answer.tsx:17 ~ Answer ~ answers", answers);
-
-  useEffect(() => {
-    const fetchAnswers = async () => {
-      let unsubscribe = {};
-      if (user) {
-        const collectionRef = collection(db, "answers");
-        const q = query(collectionRef, where("user", "==", user.uid));
-        unsubscribe = onSnapshot(q, (snapshot) => {
-          setAnswers(
-            snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-          );
-        });
-      }
-    };
-    fetchAnswers();
-  }, [user]);
-
+const Answer = ({ topic, answerText }: Answer) => {
   return (
     <>
-      {answers.map(({ topic, answerText }) => {
-        return (
-          <div className="max-w-sm" key={crypto.randomUUID()}>
-            <p className="mb-4 text-xl font-semibold text-white">{topic}:</p>
-            <div className="rounded-3xl border-2 border-gray-400 p-4 text-white">
-              {answerText}
-            </div>
-          </div>
-        );
-      })}
+      <div className="max-w-sm">
+        <p className="mb-4 text-xl font-semibold text-white">{topic}:</p>
+        <div className="rounded-3xl border-2 border-gray-400 p-4 text-white">
+          {answerText}
+        </div>
+      </div>
     </>
   );
 };
