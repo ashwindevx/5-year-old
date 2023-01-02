@@ -1,17 +1,38 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { collection, addDoc } from "@firebase/firestore";
 
 import { Formik, Form, Field } from "formik";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { PromptContext } from "../context/promptContext";
 
 const Main = () => {
   const handleLogout = async () => {
     await signOut(auth);
   };
 
+  const { prompt, updatePrompt } = useContext(PromptContext);
+
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    const saveAnswer = async () => {
+      const collectionRef = collection(db, "answers");
+      if (answer && user)
+        await addDoc(collectionRef, {
+          topic: prompt.topic,
+          answerText: answer,
+          user: user.uid,
+        });
+    };
+
+    saveAnswer();
+  }, [answer]);
 
   const initialValue = {
     topic: "",
@@ -19,6 +40,7 @@ const Main = () => {
 
   const fetchData = async (values: { topic: string }) => {
     const prompt = `Explain ${values.topic} to a 5 year old.`;
+    updatePrompt({ topic: values.topic, user: user.uid });
 
     const requestOptions = {
       method: "POST",
@@ -99,7 +121,9 @@ const Main = () => {
       ) : (
         <div></div>
       )}
-
+      <a href="/answers" className="mt-10 text-white underline">
+        Your saved Answers &gt;
+      </a>
       <button
         className="text-md mt-16 rounded-full border-2 border-slate-300 px-4 py-2 text-slate-300"
         onClick={handleLogout}

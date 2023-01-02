@@ -3,20 +3,24 @@ import Head from "next/head";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
+import { PromptContext } from "../context/promptContext";
 
 const Login: NextPage = () => {
   const provider = new GoogleAuthProvider();
   const [user] = useAuthState(auth);
+
+  const { prompt, updatePrompt } = useContext(PromptContext);
 
   const router = useRouter();
 
   useEffect(() => {
     if (user) {
       router.push("/");
+      updatePrompt({ topic: "", user: user.uid });
     }
-  });
+  }, [user]);
 
   const handleLogin = async () => {
     try {
