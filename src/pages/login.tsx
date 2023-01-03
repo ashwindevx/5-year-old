@@ -11,14 +11,14 @@ const Login: NextPage = () => {
   const provider = new GoogleAuthProvider();
   const [user] = useAuthState(auth);
 
-  const { prompt, updatePrompt } = useContext(PromptContext);
+  const { updatePrompt } = useContext(PromptContext);
 
   const router = useRouter();
 
   useEffect(() => {
     if (user) {
       router.push("/");
-      updatePrompt({ topic: "", user: user.uid });
+      updatePrompt("", user.uid);
     }
   }, [user]);
 

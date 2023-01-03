@@ -6,6 +6,7 @@ import { collection, addDoc } from "@firebase/firestore";
 import { Formik, Form, Field } from "formik";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { PromptContext } from "../context/promptContext";
+
 import Link from "next/link";
 
 const Main = () => {
@@ -13,7 +14,7 @@ const Main = () => {
     await signOut(auth);
   };
 
-  const { prompt, updatePrompt } = useContext(PromptContext);
+  const { topic, userId, updatePrompt } = useContext(PromptContext);
 
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,9 +27,9 @@ const Main = () => {
       const collectionRef = collection(db, "answers");
       if (answer && user)
         await addDoc(collectionRef, {
-          topic: prompt.topic,
+          topic: topic,
           answerText: answer,
-          user: user.uid,
+          user: userId,
         });
     };
 
@@ -41,7 +42,7 @@ const Main = () => {
 
   const fetchData = async (values: { topic: string }) => {
     const prompt = `Explain ${values.topic} to a 5 year old.`;
-    updatePrompt({ topic: values.topic, user: user?.uid });
+    updatePrompt(values.topic, userId);
 
     const requestOptions = {
       method: "POST",

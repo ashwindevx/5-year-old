@@ -1,4 +1,14 @@
-import React, { createContext } from "react";
+import { createContext } from "react";
 
-// create the context
-export const PromptContext = createContext({});
+interface ContextType {
+  topic: string;
+  userId: string;
+  updatePrompt: (newTopic: string, newUser: string) => void;
+}
+
+export const PromptContext = createContext<ContextType>({
+  topic: "",
+  userId: "",
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  updatePrompt: () => {},
+});
