@@ -5,7 +5,7 @@ import { collection, addDoc } from "@firebase/firestore";
 
 import { Formik, Form, Field } from "formik";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { PromptContext } from "../context/promptContext";
+import { PromptContext } from "../context/PromptContext";
 
 import Link from "next/link";
 

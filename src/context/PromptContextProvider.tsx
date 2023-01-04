@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PromptContext } from "./promptContext";
+import { PromptContext } from "./PromptContext";
 
 function PromptContextProvider({ children }: { children: React.ReactNode }) {
   const [topic, setTopic] = useState("");

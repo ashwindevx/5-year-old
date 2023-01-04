@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-import { PromptContext } from "../context/promptContext";
+import { PromptContext } from "../context/PromptContext";
 
 const Login: NextPage = () => {
   const provider = new GoogleAuthProvider();
