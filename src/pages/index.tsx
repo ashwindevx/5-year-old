@@ -6,6 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth } from "../firebase";
 import Main from "../components/Main";
+import Social from "../components/Social";
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -27,6 +28,7 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.png" />
       </Head>
+      <Social />
       <Main />
     </>
   );

@@ -7,6 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth } from "../firebase";
 import { PromptContext } from "../context/PromptContext";
+import Social from "../components/Social";
 
 const Login: NextPage = () => {
   const provider = new GoogleAuthProvider();
@@ -41,7 +42,8 @@ const Login: NextPage = () => {
         />
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <div className="flex min-h-screen w-full flex-col items-center justify-center bg-black pb-64 md:px-2">
+      <Social />
+      <div className="flex min-h-screen w-full flex-col items-center bg-black pt-20 md:px-2">
         <h1 className="mb-4 text-9xl font-bold text-white md:text-7xl">
           simplify it
         </h1>
