@@ -1,10 +1,11 @@
 import { type NextPage } from "next";
+import { useContext, useEffect } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
+
 import { auth } from "../firebase";
-import { useContext, useEffect } from "react";
-import { useRouter } from "next/router";
 import { PromptContext } from "../context/PromptContext";
 
 const Login: NextPage = () => {
@@ -34,9 +35,6 @@ const Login: NextPage = () => {
     <>
       <Head>
         <title>Login - Simplify It</title>
-        <meta property="og:image" content="../../public/thumbnail.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
         <meta
           name="description"
           content="a tool built with the openai api that explains topic that a 5-year-old can understand."
