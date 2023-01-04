@@ -42,37 +42,52 @@ const Answers: NextPage = () => {
   }, [user]);
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center justify-center bg-gradient-to-b from-violet-500 to-violet-800 pb-20">
-      <h1 className="my-20 text-center text-3xl font-bold text-white">
-        Answers
+    <main className="min-h-screen w-full bg-black py-10">
+      <h1 className="my-20 text-center text-8xl font-bold text-white">
+        history
       </h1>
       {loading && (
-        <h4 className="mt-10 text-2xl font-bold text-white">Loading...</h4>
+        <h4 className="my-10 text-center text-2xl font-bold text-white">
+          loading...
+        </h4>
       )}
-      {answers && !loading ? (
-        <div className="grid max-w-7xl grid-cols-3 gap-5">
-          {answers.map(({ topic, answerText }) => {
-            return (
-              <Answer
-                topic={topic}
-                answerText={answerText}
-                key={crypto.randomUUID()}
-              />
-            );
-          })}
+      {answers.length > 0 ? (
+        <div className="flex flex-col items-center">
+          <div className="mx-auto grid max-w-7xl grid-cols-3 gap-5 xl:grid-cols-1">
+            {answers.map(({ topic, answerText }) => {
+              return (
+                <Answer
+                  topic={topic}
+                  answerText={answerText}
+                  key={crypto.randomUUID()}
+                />
+              );
+            })}
+          </div>
+          <Link
+            href="/"
+            className="text-md mx-2 mt-20 rounded-full border-2 border-slate-300 px-4 py-2 text-slate-300"
+          >
+            search topic
+          </Link>
         </div>
       ) : (
         ""
       )}
-      {answers.length == 0 && (
+      {answers.length == 0 && !loading ? (
         <div className="flex flex-col items-center">
           <p className="text-xl font-semibold text-white">
-            Could not find any saved topic&apos;s answers yet!
+            nothing to see here yet!
           </p>
-          <Link href="/" className="mt-10 text-white underline">
-            Search Topic &gt;
+          <Link
+            href="/"
+            className="text-md mx-2 mt-10 rounded-full border-2 border-slate-300 px-4 py-2 text-slate-300"
+          >
+            search topic
           </Link>
         </div>
+      ) : (
+        ""
       )}
     </main>
   );
