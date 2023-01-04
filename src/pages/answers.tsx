@@ -1,26 +1,39 @@
 import { type NextPage } from "next";
+import Link from "next/link";
 import Answer from "../components/Answer";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+interface Answers {
+  topic: string;
+  answerText: string;
+  user: string;
+}
+
 const Answers: NextPage = () => {
   const [user] = useAuthState(auth);
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState<Answer[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchAnswers = async () => {
       setLoading(true);
-      let unsubscribe = {};
       if (user) {
         const collectionRef = collection(db, "answers");
         const q = query(collectionRef, where("user", "==", user.uid));
-        unsubscribe = onSnapshot(q, (snapshot) => {
-          setAnswers(
-            snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-          );
+        onSnapshot(q, (snapshot) => {
+          const data: Answer[] = snapshot.docs.map((doc) => {
+            const { topic, answerText, user, key } = doc.data();
+            return {
+              topic,
+              answerText,
+              user,
+              key,
+            };
+          });
+          setAnswers(data);
           setLoading(false);
         });
       }
@@ -50,6 +63,16 @@ const Answers: NextPage = () => {
         </div>
       ) : (
         ""
+      )}
+      {answers.length == 0 && (
+        <div className="flex flex-col items-center">
+          <p className="text-xl font-semibold text-white">
+            Could not find any saved topic&apos;s answers yet!
+          </p>
+          <Link href="/" className="mt-10 text-white underline">
+            Search Topic &gt;
+          </Link>
+        </div>
       )}
     </main>
   );
