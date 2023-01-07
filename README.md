@@ -1,28 +1,25 @@
-# Create T3 App
+## What is Simplify-It?
+Simplify-It is a tool that helps you understand complex topics such as Recursion, Optional Chaining, etc that a 5-year-old could understand. 
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+We've all been there - stuck trying to understand something that seems too complicated. I myself get frustrated while learning some new topics or concepts that go over my head on the initial take.
 
-## What's next? How do I make an app with this?
+## How is it built?
+Built on top of OpenAI API using prompt `Explain ${keyword} to a 5 year old.` and refined model takes away the pain of constantly writing the same exact prompt in the Chat Open AI and saving your generated results into your account that is authenticated using Firebase’s Google Authentication. 
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## Tech Stack:
+- Typescript
+- NextJS
+- Firebase
+- TailwindCSS
+- OpenAI API
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Purpose of this app and learnings from building it:
+The purpose of this project was to:
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- Build a tool that takes away the pain of writing the same prompt over and over again on Chat OpenAI to just writing down the keyword that saves the results for future purposes.
+- Learn Typescript. I heard a lot of good things about the features that TypeScript has to offer, so I decided to learn it. Since this was a mini project, I thought it would be a perfect opportunity for me to learn and implement TypeScript.
 
-## Learn More
+I am happy with the response that the app got. Within a couple of days of the app going live, the app is at 50+ Sign-ups and 450+ keywords searched.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## TL;DR:
+Simplify-It is a tool that helps users understand complex topics in a simple and easy-to-understand way. The tech stack for the project includes TypeScript, NextJS, Firebase, TailwindCSS, and the OpenAI API. The purpose of the app was to build a tool that simplifies the process of searching for information using the Chat OpenAI API and also to learn and implement TypeScript.
